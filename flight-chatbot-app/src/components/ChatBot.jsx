@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+//Todo 1: Implement functionality to update state demoFlights2
+// Todo 2: implement useState to switch useEffect
+// Todo 3: Implement useEffect for fetching all available flights 
+
+import React, { useEffect, useState } from "react";
+import { fetchFlights } from "../service/flightService";
 
 // --- ChatBot Component ---
 function ChatBot() {
@@ -82,7 +87,7 @@ function Flights({ flights }) {
             </tr>
           </thead>
           <tbody>
-            {flights.map((flight) => (
+            {flights?.map((flight) => (
               <tr key={flight.id}>
                 <td>{flight.id}</td>
                 <td>{flight.flightNumber}</td>
@@ -102,6 +107,25 @@ function Flights({ flights }) {
 
 // --- App Component ---
 export default function App() {
+
+   const [demoFlights2, setDemoflights2] = useState([]);
+
+   const [fetchAvailableFlights, setFetchAvailableFlights] = useState(false);
+   
+   useEffect(() => {
+    const fetchAllAvailableFlights = async () => {
+     // Fetch flights from backend when component mounts
+     try {
+     const data = await fetchFlights.getAllAvailableFlights();
+     console.log("Fetched flights in ChatBot.jsx: ", data);
+     setDemoflights2(data);
+     } catch (error) {
+      console.log("Error fetching flights in ChatBot.jsx: ", error);
+     }
+    };
+    fetchAllAvailableFlights();
+   }, [fetchAvailableFlights]);
+
   const demoFlights = [
     {
       id: 1,
@@ -140,7 +164,7 @@ export default function App() {
           <ChatBot />
         </div>
         <div className="col-md-6">
-          <Flights flights={demoFlights} />
+          <Flights flights={demoFlights2} />
         </div>
       </div>
     </div>
