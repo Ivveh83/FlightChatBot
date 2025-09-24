@@ -1,0 +1,37 @@
+.chat-bubble {
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 70%;
+    word-break: break-word;
+    position: relative;
+}
+
+.user-bubble {
+    background-color: #0deee3ff;
+    color: black;
+}
+
+.user-bubble::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 10px;
+    border-width: 8px 0 8px 8px;
+    border-style: solid;
+    border-color: transparent transparent transparent #0deee3ff;
+}
+
+.bot-bubble {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.bot-bubble::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 10px;
+    border-width: 8px 8px 8px 0;
+    border-style: solid;
+    border-color: transparent #f1f1f1 transparent transparent;
+}

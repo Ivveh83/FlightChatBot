@@ -1,17 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import ChatBot from './components/ChatBot'
+import { useState } from "react";
+import "./App.css";
+import ChatBot from "./components/ChatBot";
+import Flights from "./components/Flights";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [fetchAvailableFlights, setFetchAvailableFlights] = useState(false);
 
   return (
-    <>
-     <ChatBot />
-    </>
-  )
+    <div className="container py-4">
+      <h1 className="mb-4">Flight Management Portal</h1>
+      <div className="row">
+        <div className="col-md-6">
+          <ChatBot setFetchAvailableFlights={setFetchAvailableFlights} />
+        </div>
+        <div className="col-md-6">
+          <Flights fetchAvailableFlights={fetchAvailableFlights} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
