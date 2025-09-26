@@ -21,30 +21,39 @@ function ChatBot({ setFetchAvailableFlights }) {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-    setMessages((prev) => [...prev, { sender: "user", text: input }]);
+
+    setMessages((prev) => [
+      ...prev,
+      { sender: "user", text: input },
+      { sender: "bot", text: "bot is typing..." },
+    ]);
+
     try {
-      const response = await flightAssistance.fetchAIResponse(
+      flightAssistance.fetchAIResponse(
         input,
-        conversationId
+        conversationId,
+        (chunk, fullText) => {
+          console.log("Received chunk:", chunk);
+          console.log("So far:", fullText);
+
+          setMessages((prev) => [
+            ...prev.slice(0, -1),
+            { sender: "bot", text: fullText },
+          ]);
+        }
       );
-      setMessages((prev) => [...prev, { sender: "bot", text: response }]);
     } catch (error) {
       console.log("Error in sendMessage: ", error);
       setMessages((prev) => [
-        ...prev,
+        ...prev.slice(0, -1), // Ta bort "typing..."
         {
           sender: "bot",
           text: "Sorry, something went wrong. Please try again",
         },
       ]);
     }
-    // For demo: bot just echoes the input
-    /*setMessages([
-      ...newMessages,
-      { sender: "bot", text:  },
-    ]);*/
-    setInput("");
 
+    setInput("");
     setFetchAvailableFlights((prev) => !prev); // Trigger fetching available flights
   };
 
