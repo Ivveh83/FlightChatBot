@@ -25,11 +25,11 @@ function ChatBot({ setFetchAvailableFlights }) {
     setMessages((prev) => [
       ...prev,
       { sender: "user", text: input },
-      { sender: "bot", text: "bot is typing..." },
+      { sender: "bot", text: "bot is working..." },
     ]);
 
     try {
-      flightAssistance.fetchAIResponse(
+      await flightAssistance.fetchAIResponse(
         input,
         conversationId,
         (chunk, fullText) => {

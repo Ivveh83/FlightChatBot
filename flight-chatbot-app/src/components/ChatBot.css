@@ -4,6 +4,7 @@
     max-width: 70%;
     word-break: break-word;
     position: relative;
+    white-space: pre-wrap; /* Preserves whitespace and line breaks*/
 }
 
 .user-bubble {
